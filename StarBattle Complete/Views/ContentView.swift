@@ -9,7 +9,7 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .padding()
 
-            GridView()
+            GridView(rows: 10, columns: 10)
                 .padding()
             
             Button(action: {
