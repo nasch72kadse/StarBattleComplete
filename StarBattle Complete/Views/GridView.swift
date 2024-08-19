@@ -23,6 +23,7 @@ struct GridView: View {
 
 struct CellView: View {
     @State private var content: String? = nil // Inhalt der Zelle, z.B. Mine oder Zahl
+    
     var body: some View {
         Rectangle()
             .fill(Color.blue)
@@ -31,20 +32,22 @@ struct CellView: View {
                 Rectangle()
                     .stroke(Color.black, lineWidth: 1)
             )
+            .overlay(
+                Text(content ?? "")
+                    .foregroundColor(.white) // Textfarbe, um den Inhalt sichtbar zu machen
+            )
             .onTapGesture {
-                            placeContent()
-                        }
+                placeContent()
+            }
     }
     
     private func placeContent() {
         // Beispiel: Setzt einen Platzhalterinhalt bei Klick
         if content == nil {
             content = "X" // Beispiel: Eine Mine setzen
-        }
-        else if content == "X" {
-            content = "⭐" // Beispiel: Eine Mine setzen
-        }
-        else {
+        } else if content == "X" {
+            content = "⭐" // Beispiel: Eine andere Markierung setzen
+        } else {
             content = nil
         }
     }
