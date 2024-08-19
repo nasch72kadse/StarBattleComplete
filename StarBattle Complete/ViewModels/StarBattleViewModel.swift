@@ -11,8 +11,11 @@ class StarBattleViewModel: ObservableObject {
     
     func placeStar(atRow row: Int, column: Int) {
         if grid[row][column] == .empty {
+            grid[row][column] = .cross
+        } else if grid[row][column] == .cross {
             grid[row][column] = .star
-        } else {
+        }
+        else {
             grid[row][column] = .empty
         }
     }
@@ -25,4 +28,5 @@ class StarBattleViewModel: ObservableObject {
 enum CellState {
     case empty
     case star
+    case cross
 }

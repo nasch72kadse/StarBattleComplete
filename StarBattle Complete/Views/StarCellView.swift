@@ -12,10 +12,15 @@ struct StarCellView: View {
             Rectangle()
                 .foregroundColor(viewModel.grid[row][column] == .star ? .yellow : .gray)
                 .overlay(
-                    viewModel.grid[row][column] == .star
-                    ? Image(systemName: "star.fill")
-                        .foregroundColor(.black)
-                    : nil
+                    Group {
+                        if viewModel.grid[row][column] == .star {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.black)
+                        } else if viewModel.grid[row][column] == .cross {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                        }
+                    }
                 )
                 .frame(width: 50, height: 50)
         }
