@@ -10,8 +10,19 @@ import Testing
 
 struct StarBattle_CompleteTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    @Test func puzzleSolvable() async throws {
+        let viewModel = StarBattleViewModel(
+            gridSize: 10,
+            regions: SamplePuzzle.regions10x10,
+            starsPerLine: 2,
+            starsPerRegion: 2
+        )
+
+        for (row, col) in SamplePuzzle.solution10x10 {
+            viewModel.grid[row][col] = .star
+        }
+
+        #expect(viewModel.isSolved())
     }
 
 }

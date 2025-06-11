@@ -53,8 +53,10 @@ struct GridView_Previews: PreviewProvider {
         GridView()
             .environmentObject(
                 StarBattleViewModel(
-                    gridSize: 5,
-                    regions: SamplePuzzle.regions5x5
+                    gridSize: 10,
+                    regions: SamplePuzzle.regions10x10,
+                    starsPerLine: 2,
+                    starsPerRegion: 2
                 )
             )
             .previewLayout(.sizeThatFits)
