@@ -29,4 +29,15 @@ enum CellState {
     case empty
     case star
     case cross
+
+    var displayValue: String {
+        switch self {
+        case .empty:
+            return ""
+        case .star:
+            return "⭐"
+        case .cross:
+            return "X"
+        }
+    }
 }

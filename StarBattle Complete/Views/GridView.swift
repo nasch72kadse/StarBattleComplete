@@ -2,16 +2,15 @@ import SwiftUI
 
 struct GridView: View {
     @EnvironmentObject var viewModel: StarBattleViewModel
-    let rows: Int
-    let columns: Int
     let spacing: CGFloat = 4 // Abstand zwischen den Zellen
     
     var body: some View {
         VStack(spacing: spacing) {
-            ForEach(0..<rows, id: \.self) { row in
+            ForEach(0..<viewModel.gridSize, id: \.self) { row in
                 HStack(spacing: spacing) {
-                    ForEach(0..<columns, id: \.self) { column in
-                        CellView()
+                    ForEach(0..<viewModel.gridSize, id: \.self) { column in
+                        CellView(row: row, column: column)
+                            .environmentObject(viewModel)
                     }
                 }
             }
@@ -22,7 +21,9 @@ struct GridView: View {
 }
 
 struct CellView: View {
-    @State private var content: String? = nil // Inhalt der Zelle, z.B. Mine oder Zahl
+    @EnvironmentObject var viewModel: StarBattleViewModel
+    let row: Int
+    let column: Int
     
     var body: some View {
         Rectangle()
@@ -33,29 +34,19 @@ struct CellView: View {
                     .stroke(Color.black, lineWidth: 1)
             )
             .overlay(
-                Text(content ?? "")
+                Text(viewModel.grid[row][column].displayValue)
                     .foregroundColor(.white) // Textfarbe, um den Inhalt sichtbar zu machen
             )
             .onTapGesture {
-                placeContent()
+                viewModel.placeStar(atRow: row, column: column)
             }
-    }
-    
-    private func placeContent() {
-        // Beispiel: Setzt einen Platzhalterinhalt bei Klick
-        if content == nil {
-            content = "X" // Beispiel: Eine Mine setzen
-        } else if content == "X" {
-            content = "⭐" // Beispiel: Eine andere Markierung setzen
-        } else {
-            content = nil
-        }
     }
 }
 
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
-        GridView(rows: 10, columns: 10)
+        GridView()
+            .environmentObject(StarBattleViewModel(gridSize: 5))
             .previewLayout(.sizeThatFits)
     }
 }
