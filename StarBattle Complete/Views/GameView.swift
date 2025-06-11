@@ -1,7 +1,10 @@
 import SwiftUI
 
 struct GameView: View {
-    @StateObject var viewModel = StarBattleViewModel(gridSize: 5) // Beispiel für ein 5x5 Gitter
+    @StateObject var viewModel = StarBattleViewModel(
+        gridSize: 5,
+        regions: SamplePuzzle.regions5x5
+    )
 
     var body: some View {
         VStack {
@@ -21,6 +24,12 @@ struct GameView: View {
                     .background(Color.red)
                     .foregroundColor(.white)
                     .cornerRadius(8)
+            }
+
+            if viewModel.isSolved() {
+                Text("Puzzle solved!")
+                    .foregroundColor(.green)
+                    .padding()
             }
         }
         .navigationTitle("Star Battle")
