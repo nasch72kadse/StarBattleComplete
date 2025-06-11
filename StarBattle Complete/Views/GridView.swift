@@ -24,10 +24,10 @@ struct CellView: View {
     @EnvironmentObject var viewModel: StarBattleViewModel
     let row: Int
     let column: Int
-    
+
     var body: some View {
         Rectangle()
-            .fill(Color.blue)
+            .fill(colorForRegion(viewModel.regions[row][column]))
             .frame(width: 30, height: 30)
             .overlay(
                 Rectangle()
@@ -41,12 +41,22 @@ struct CellView: View {
                 viewModel.placeStar(atRow: row, column: column)
             }
     }
+
+    private func colorForRegion(_ index: Int) -> Color {
+        let colors: [Color] = [.blue, .green, .orange, .purple, .pink, .yellow, .mint, .teal]
+        return colors[index % colors.count].opacity(0.6)
+    }
 }
 
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
         GridView()
-            .environmentObject(StarBattleViewModel(gridSize: 5))
+            .environmentObject(
+                StarBattleViewModel(
+                    gridSize: 5,
+                    regions: SamplePuzzle.regions5x5
+                )
+            )
             .previewLayout(.sizeThatFits)
     }
 }
