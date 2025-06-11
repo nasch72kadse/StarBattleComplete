@@ -9,7 +9,7 @@ struct GameView: View {
                 .font(.title)
                 .padding()
 
-            GridView(rows: 10, columns: 10)
+            GridView()
                 .environmentObject(viewModel)
                 .padding()
 
