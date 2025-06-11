@@ -7,15 +7,12 @@ class StarBattleViewModel: ObservableObject {
     let starsPerLine: Int
     let starsPerRegion: Int
 
-    init(gridSize: Int,
-         regions: [[Int]],
-         starsPerLine: Int = 2,
-         starsPerRegion: Int = 1) {
-        self.gridSize = gridSize
-        self.regions = regions
-        self.starsPerLine = starsPerLine
-        self.starsPerRegion = starsPerRegion
-        self.grid = Array(repeating: Array(repeating: .empty, count: gridSize), count: gridSize)
+    init(puzzle: Puzzle) {
+        self.gridSize = puzzle.gridSize
+        self.regions = puzzle.regions
+        self.starsPerLine = puzzle.starsPerLine
+        self.starsPerRegion = puzzle.starsPerRegion
+        self.grid = Array(repeating: Array(repeating: .empty, count: puzzle.gridSize), count: puzzle.gridSize)
     }
 
     func placeStar(atRow row: Int, column: Int) {

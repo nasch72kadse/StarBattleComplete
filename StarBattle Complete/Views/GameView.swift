@@ -1,37 +1,43 @@
 import SwiftUI
 
 struct GameView: View {
-    @StateObject var viewModel = StarBattleViewModel(
-        gridSize: 10,
-        regions: SamplePuzzle.regions10x10,
-        starsPerLine: 2,
-        starsPerRegion: 2
-    )
+    @StateObject private var viewModel: StarBattleViewModel
+
+    init() {
+        let puzzle = SamplePuzzle.randomPuzzle()
+        _viewModel = StateObject(wrappedValue: StarBattleViewModel(puzzle: puzzle))
+    }
 
     var body: some View {
-        VStack {
-            Text("Game Screen")
-                .font(.title)
-                .padding()
-
-            GridView()
-                .environmentObject(viewModel)
-                .padding()
-
-            Button(action: {
-                viewModel.resetGrid()
-            }) {
-                Text("Reset")
+        ZStack {
+            VStack {
+                Text("Game Screen")
+                    .font(.title)
                     .padding()
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+
+                GridView()
+                    .environmentObject(viewModel)
+                    .padding()
+
+                Button(action: {
+                    viewModel.resetGrid()
+                }) {
+                    Text("Reset")
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+
+                if viewModel.isSolved() {
+                    Text("Puzzle solved!")
+                        .foregroundColor(.green)
+                        .padding()
+                }
             }
-
             if viewModel.isSolved() {
-                Text("Puzzle solved!")
-                    .foregroundColor(.green)
-                    .padding()
+                ConfettiView()
+                    .ignoresSafeArea()
             }
         }
         .navigationTitle("Star Battle")
